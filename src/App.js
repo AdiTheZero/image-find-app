@@ -1,9 +1,8 @@
 import React from 'react';
 import logo from './logo.svg'
-import axios from'axios'
-import './App.css'
-import BlankImage from './Blank.png'
-import Button from '@material-ui/core/Button'
+import axios from'axios';
+import './App.css';
+import Button from '@material-ui/core/Button';
 import Config from './config';
 
 class App extends React.Component {
@@ -16,13 +15,13 @@ class App extends React.Component {
                 //     accuracy: ''
                 // }
             ],
-            image: BlankImage
+            image: null
         }
     }
 
     searchAction() {
         let formData = new FormData()
-        var imagedata = document.querySelector('input[type="file"]').files[0];
+        var imagedata = this.state.image;
         formData.append('image', imagedata)
 
         if (imagedata) {
@@ -39,14 +38,17 @@ class App extends React.Component {
                 this.setState({imageList: response.data});
             });
         } else {
-            alert('Error No file selected')
+            alert('Error No file selected');
         }
     }
 
     handleChange(event) {
-        if(event.target.files[0]) {
+        const file = event.target.files[0];
+        console.log(file);
+        if(file !== undefined && file !== null) {
+            console.log(true);
             this.setState({
-                image: URL.createObjectURL(event.target.files[0])
+                image: URL.createObjectURL(file)
             });
         }
     }
@@ -58,19 +60,17 @@ class App extends React.Component {
             <h2>An Image Retrieval System</h2>
             <br/>
             <br/>
-            <div>
-                <div style={{'height': '200px'}}>
-                    <img src={this.state.image} alt='hey' style={{'maxHeight': '200px', 'maxWidth': '200px'}} />
-                </div>
-                <br />
-                <div>  
-                    <input type="file" name="image" id="image"  style={{ display: 'none' }} onChange={(event) => this.handleChange(event)}></input>
-                    <label htmlFor="image">
-                        <Button variant="contained" component="span">
-                            Upload
-                        </Button>
-                    </label>
-                </div>
+            <div className="upload-img-container">
+                {this.state.image == null ? null : <img src={this.state.image} alt='object to be searched' />}
+            </div>
+            <br />
+            <div>  
+                <input type="file" name="image" id="image"  style={{ display: 'none' }} onChange={(event) => this.handleChange(event)}></input>
+                <label htmlFor="image">
+                    <Button variant="contained" component="span">
+                        Upload
+                    </Button>
+                </label>
             </div>
             <br/>
             <br/>
