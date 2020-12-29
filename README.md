@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-To see the app in live action go to [https://github.com/KKghub/image-find-app](https://github.com/KKghub/image-find-app)
+To see the app in live action go to [https://kkghub.github.io/image-find-app](https://kkghub.github.io/image-find-app)
 
 ## Running locally
 
