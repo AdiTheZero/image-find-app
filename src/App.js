@@ -20,7 +20,6 @@ class App extends React.Component {
         }
     }
 
-
     searchAction() {
         let formData = new FormData()
         var imagedata = document.querySelector('input[type="file"]').files[0];
@@ -30,11 +29,15 @@ class App extends React.Component {
             this.setState({
                 imageList: []
             });
-            axios.post(`${Config.apiUrl}/predict`, formData, {headers:{'Content-Type': 'multipart/form-data'}}).then(
-            (response) => {
+            axios.post(
+                `${Config.apiUrl}/predict`,
+                formData,
+                {
+                    headers: {'Content-Type': 'multipart/form-data'}
+                })
+            .then((response) => {
                 this.setState({imageList: response.data});
-            }
-            );
+            });
         } else {
             alert('Error No file selected')
         }
@@ -43,15 +46,10 @@ class App extends React.Component {
     handleChange(event) {
         if(event.target.files[0]) {
             this.setState({
-            image: URL.createObjectURL(event.target.files[0])
-            })
-        } else {
-            this.setState({
-                image: {BlankImage}
+                image: URL.createObjectURL(event.target.files[0])
             });
         }
     }
-
 
     render () {
         return <div className="App"> 
@@ -61,12 +59,12 @@ class App extends React.Component {
             <br/>
             <br/>
             <div>
-                <div>
-                    <img src={this.state.image} alt='hey' height='200px' width='200px'/>
+                <div style={{'height': '200px'}}>
+                    <img src={this.state.image} alt='hey' style={{'maxHeight': '200px', 'maxWidth': '200px'}} />
                 </div>
                 <br />
                 <div>  
-                    <input type="file" name="image" id="image"  style={{ display: 'none' }} onChange={this.handleChange.bind(this)}></input>
+                    <input type="file" name="image" id="image"  style={{ display: 'none' }} onChange={(event) => this.handleChange(event)}></input>
                     <label htmlFor="image">
                         <Button variant="contained" component="span">
                             Upload
@@ -76,7 +74,7 @@ class App extends React.Component {
             </div>
             <br/>
             <br/>
-            <Button variant="contained" color="primary" onClick={this.searchAction.bind(this)}>Search</Button>
+            <Button variant="contained" color="primary" onClick={() => this.searchAction()}>Search</Button>
             <br/>
             <br/>
             <div className='container'>
