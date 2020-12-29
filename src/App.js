@@ -15,13 +15,13 @@ class App extends React.Component {
                 //     accuracy: ''
                 // }
             ],
-            image: null
+            uploadImage: null
         }
     }
 
     searchAction() {
         let formData = new FormData()
-        var imagedata = this.state.image;
+        var imagedata = this.state.uploadImage;
         formData.append('image', imagedata)
 
         if (imagedata) {
@@ -44,11 +44,9 @@ class App extends React.Component {
 
     handleChange(event) {
         const file = event.target.files[0];
-        console.log(file);
         if(file !== undefined && file !== null) {
-            console.log(true);
             this.setState({
-                image: URL.createObjectURL(file)
+                uploadImage: file
             });
         }
     }
@@ -61,7 +59,7 @@ class App extends React.Component {
             <br/>
             <br/>
             <div className="upload-img-container">
-                {this.state.image == null ? null : <img src={this.state.image} alt='object to be searched' />}
+                {this.state.uploadImage == null ? null : <img src={URL.createObjectURL(this.state.uploadImage)} alt='object to be searched' />}
             </div>
             <br />
             <div>  
