@@ -56,7 +56,8 @@ class App extends React.Component {
     render () {
         return <div className="App"> 
             <img src={logo} className="App-logo" alt="logo" height='100px' width='100px'/>
-            <h1>Image Retrieval System</h1>
+            <h1>Image Find</h1>
+            <h2>An Image Retrieval System</h2>
             <br/>
             <br/>
             <div>
@@ -67,7 +68,7 @@ class App extends React.Component {
                 <div>  
                     <input type="file" name="image" id="image"  style={{ display: 'none' }} onChange={this.handleChange.bind(this)}></input>
                     <label htmlFor="image">
-                        <Button variant="raised" component="span">
+                        <Button variant="contained" component="span">
                             Upload
                         </Button>
                     </label>
@@ -81,7 +82,7 @@ class App extends React.Component {
             <div className='container'>
                 {this.state.imageList.map( (image, index) => (
                     <div key={index}>   
-                        <img src={`${Config.apiUrl}/getImage/${image.class}?name=${image.name}`} alt={image.name} height='100px' width='100px'></img>
+                        <img loading="lazy" src={`${Config.apiUrl}/getImage/${image.class}?name=${image.name}`} alt={image.name} height='100px' width='100px'></img>
                     </div>
                 ))}
             </div>
