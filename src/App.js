@@ -22,25 +22,17 @@ class App extends React.Component {
 
 
     searchAction() {
-        
         let formData = new FormData()
         var imagedata = document.querySelector('input[type="file"]').files[0];
         formData.append('image', imagedata)
 
         if (imagedata) {
-            // this.setState({image: URL.createObjectURL(imagedata)});
-            // alert('h')
             this.setState({
                 imageList: []
             });
-            axios.post(`${Config.apiUrl}/queryImage`, formData, {headers:{'Content-Type': 'multipart/form-data'}}).then(
-            (resp) => {
-                //   alert("success")
-                axios.get(`${Config.apiUrl}/getResults`).then(
-                (response) => {
-                        this.setState({imageList: response.data});
-                }
-                );
+            axios.post(`${Config.apiUrl}/predict`, formData, {headers:{'Content-Type': 'multipart/form-data'}}).then(
+            (response) => {
+                this.setState({imageList: response.data});
             }
             );
         } else {
@@ -62,32 +54,24 @@ class App extends React.Component {
 
 
     render () {
-
         return <div className="App"> 
             <img src={logo} className="App-logo" alt="logo" height='100px' width='100px'/>
             <h1>Image Retrieval System</h1>
-            {/* <br/>
-            <br/>
-            <ImageUpload/> */}
             <br/>
             <br/>
             <div>
-
                 <div>
                     <img src={this.state.image} alt='hey' height='200px' width='200px'/>
-                    {/* <img src={BlankImage}/> */}
                 </div>
-                <br/>
+                <br />
                 <div>  
-                <input type="file" name="image" id="image"  style={{ display: 'none' }} onChange={this.handleChange.bind(this)}></input>
-                <label htmlFor="image">
-                    <Button variant="raised" component="span">
-                        Upload
-                    </Button>
-                </label> 
-                {/* <label for="image">Select image...</label> */}
+                    <input type="file" name="image" id="image"  style={{ display: 'none' }} onChange={this.handleChange.bind(this)}></input>
+                    <label htmlFor="image">
+                        <Button variant="raised" component="span">
+                            Upload
+                        </Button>
+                    </label>
                 </div>
-            
             </div>
             <br/>
             <br/>
